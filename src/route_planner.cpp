@@ -7,6 +7,7 @@
 using namespace std;
 //for testing purpose
 
+using std::sort;
 RoutePlanner::RoutePlanner(RouteModel &model, float start_x, float start_y, float end_x, float end_y): m_Model(model) {
     // Convert inputs to percentage:
     start_x *= 0.01;
@@ -61,9 +62,17 @@ void RoutePlanner::AddNeighbors(RouteModel::Node *current_node) {
 // - Create a pointer to the node in the list with the lowest sum.
 // - Remove that node from the open_list.
 // - Return the pointer.
-
-RouteModel::Node *RoutePlanner::NextNode() {
-
+//auxilliary function
+bool Compare(RouteModel::Node* a, RouteModel::Node* b){
+  float a_sum = a->h_value + a->g_value;
+  float b_sum = b->h_value + b->g_value;
+  return b_sum > a_sum; //ascending order
+}
+RouteModel::Node* RoutePlanner::NextNode() {
+	sort(this->open_list.begin(), this->open_list.end(), Compare);
+  	RouteModel::Node* temp = this->open_list.back();
+  	this->open_list.pop_back();
+  	return temp;
 }
 
 
@@ -79,9 +88,20 @@ std::vector<RouteModel::Node> RoutePlanner::ConstructFinalPath(RouteModel::Node 
     // Create path_found vector
     distance = 0.0f;
     std::vector<RouteModel::Node> path_found;
-
+  std::vector<RouteModel::Node> path_reverse;
+	RouteModel::Node* temp = current_node;
     // TODO: Implement your solution here.
-
+	while(temp != this->start_node){
+     distance   += temp->distance(*(temp->parent));
+  	path_reverse.push_back(*temp);
+     temp = temp ->parent;
+    }
+    path_reverse.push_back(*(this->start_node));
+  	while(path_reverse.size()>0)
+    {
+     path_found.push_back(path_reverse.back());
+     path_reverse.pop_back();
+    }
     distance *= m_Model.MetricScale(); // Multiply the distance by the scale of the map to get meters.
     return path_found;
 

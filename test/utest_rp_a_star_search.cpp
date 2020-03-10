@@ -90,7 +90,7 @@ TEST_F(RoutePlannerTest, TestAddNeighbors) {
     }
 }
 
-/*
+
 // Test the ConstructFinalPath method.
 TEST_F(RoutePlannerTest, TestConstructFinalPath) {
     // Construct a path.
@@ -106,7 +106,7 @@ TEST_F(RoutePlannerTest, TestConstructFinalPath) {
     EXPECT_FLOAT_EQ(end_node->y, path.back().y);
 }
 
-
+/*
 // Test the AStarSearch method.
 TEST_F(RoutePlannerTest, TestAStarSearch) {
     route_planner.AStarSearch();
