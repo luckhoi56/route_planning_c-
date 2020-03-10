@@ -43,7 +43,15 @@ return temp;
 // - For each node in current_node.neighbors, add the neighbor to open_list and set the node's visited attribute to true.
 
 void RoutePlanner::AddNeighbors(RouteModel::Node *current_node) {
-
+	current_node->FindNeighbors();
+  	//RouteModel::NodeNode* i = nullptr;
+  	for(RouteModel::Node* i: current_node->neighbors){
+      i->parent = current_node;
+      i->h_value =CalculateHValue(i);
+      i->g_value = this->start_node->distance(*i);
+      i->visited = true;
+      this->open_list.push_back(i);
+    }
 }
 
 

@@ -69,7 +69,7 @@ TEST_F(RoutePlannerTest, TestCalculateHValue) {
 }
 
 
-/*
+
 // Test the AddNeighbors method.
 bool NodesSame(RouteModel::Node* a, RouteModel::Node* b) { return a == b; }
 TEST_F(RoutePlannerTest, TestAddNeighbors) {
@@ -90,7 +90,7 @@ TEST_F(RoutePlannerTest, TestAddNeighbors) {
     }
 }
 
-
+/*
 // Test the ConstructFinalPath method.
 TEST_F(RoutePlannerTest, TestConstructFinalPath) {
     // Construct a path.
